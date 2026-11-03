@@ -81,8 +81,61 @@ const observer = new IntersectionObserver(
 );
 slides.forEach((s) => observer.observe(s));
 
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Intro: the wordmark fills the screen black-on-white, inverts to white-on-black,
+// then shrinks back into its spot in the header as the reel fades in.
+const intro = document.getElementById("intro");
+const endIntro = () => {
+  intro.remove();
+  document.documentElement.classList.remove("intro-running");
+};
+
+function playIntro() {
+  const mark = intro.querySelector(".intro-mark");
+  const r = document.querySelector(".top .wordmark").getBoundingClientRect();
+  mark.style.left = `${r.left}px`;
+  mark.style.top = `${r.top}px`;
+
+  const scale = Math.min((innerWidth * 0.92) / r.width, (innerHeight * 0.5) / r.height);
+  const dx = innerWidth / 2 - (r.left + r.width / 2);
+  const dy = innerHeight / 2 - (r.top + r.height / 2);
+  const big = `translate(${dx}px, ${dy}px) scale(${scale})`;
+  const timing = { duration: 2800, fill: "forwards" };
+  const settle = "cubic-bezier(0.7, 0, 0.2, 1)";
+
+  mark.style.opacity = 1;
+  const text = mark.animate(
+    [
+      { offset: 0, transform: big, color: "#000" },
+      { offset: 0.28, transform: big, color: "#000", easing: "ease-in-out" },
+      { offset: 0.48, transform: big, color: "#fff" },
+      { offset: 0.6, transform: big, color: "#fff", easing: settle },
+      { offset: 1, transform: "none", color: "#fff" },
+    ],
+    timing
+  );
+  const backdrop = intro.animate(
+    [
+      { offset: 0, backgroundColor: "#fff" },
+      { offset: 0.28, backgroundColor: "#fff", easing: "ease-in-out" },
+      { offset: 0.48, backgroundColor: "#000" },
+      { offset: 0.68, backgroundColor: "rgba(0, 0, 0, 1)", easing: "ease-out" },
+      { offset: 1, backgroundColor: "rgba(0, 0, 0, 0)" },
+    ],
+    timing
+  );
+
+  backdrop.finished.then(endIntro);
+  // Click anywhere to skip
+  intro.addEventListener("click", () => [text, backdrop].forEach((a) => a.finish()));
+}
+
+if (reducedMotion) endIntro();
+else document.fonts.ready.then(playIntro);
+
 // Respect reduced-motion: show posters instead of autoplaying video
-if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+if (reducedMotion) {
   observer.disconnect();
   const fallback = new IntersectionObserver(
     (entries) => entries.forEach((e) => e.isIntersecting && setActive(Number(e.target.dataset.index))),

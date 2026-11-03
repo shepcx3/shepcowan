@@ -9,8 +9,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <!-- Intro only runs with JS; without it the page shows normally -->
+  <script>document.documentElement.classList.add("js", "intro-running");</script>
 </head>
 <body class="film">
+
+  <div class="intro" id="intro" aria-hidden="true">
+    <span class="wordmark intro-mark">Shep Cowan</span>
+  </div>
 
   <header class="top">
     <a class="wordmark" href="./">Shep Cowan</a>
