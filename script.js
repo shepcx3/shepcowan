@@ -101,27 +101,28 @@ function playIntro() {
   const dx = innerWidth / 2 - (r.left + r.width / 2);
   const dy = innerHeight / 2 - (r.top + r.height / 2);
   const big = `translate(${dx}px, ${dy}px) scale(${scale})`;
-  const timing = { duration: 2800, fill: "forwards" };
+  // 2.2s total: black-on-white 0.8s, hard invert, white-on-black 0.4s, fall into place 1s.
+  // The swap is a cut, not a fade: fading both colours passes through a grey where the text vanishes.
+  const timing = { duration: 2200, fill: "forwards" };
   const settle = "cubic-bezier(0.7, 0, 0.2, 1)";
+  const cut = "steps(1, end)";
 
   mark.style.opacity = 1;
   const text = mark.animate(
     [
-      { offset: 0, transform: big, color: "#000" },
-      { offset: 0.28, transform: big, color: "#000", easing: "ease-in-out" },
-      { offset: 0.48, transform: big, color: "#fff" },
-      { offset: 0.6, transform: big, color: "#fff", easing: settle },
+      { offset: 0, transform: big, color: "#000", easing: cut },
+      { offset: 0.36, transform: big, color: "#fff" },
+      { offset: 0.55, transform: big, color: "#fff", easing: settle },
       { offset: 1, transform: "none", color: "#fff" },
     ],
     timing
   );
   const backdrop = intro.animate(
     [
-      { offset: 0, backgroundColor: "#fff" },
-      { offset: 0.28, backgroundColor: "#fff", easing: "ease-in-out" },
-      { offset: 0.48, backgroundColor: "#000" },
-      { offset: 0.68, backgroundColor: "rgba(0, 0, 0, 1)", easing: "ease-out" },
-      { offset: 1, backgroundColor: "rgba(0, 0, 0, 0)" },
+      { offset: 0, backgroundColor: "#fff", easing: cut },
+      { offset: 0.36, backgroundColor: "#0b0b0b" },
+      { offset: 0.55, backgroundColor: "#0b0b0b", easing: "ease-out" },
+      { offset: 1, backgroundColor: "rgba(11, 11, 11, 0)" },
     ],
     timing
   );
@@ -132,7 +133,11 @@ function playIntro() {
 }
 
 if (reducedMotion) endIntro();
-else document.fonts.ready.then(playIntro);
+else {
+  document.fonts.ready.then(playIntro);
+  // Safety net: never leave the overlay up if something goes wrong
+  setTimeout(endIntro, 4000);
+}
 
 // Respect reduced-motion: show posters instead of autoplaying video
 if (reducedMotion) {
