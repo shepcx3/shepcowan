@@ -3,20 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Shep Cowan — Film</title>
-  <meta name="description" content="Shep Cowan — Second Assistant Director on commercials and music videos in Toronto.">
+  <title>Shep Cowan — Film &amp; Web</title>
+  <meta name="description" content="Shep Cowan — Second Assistant Director on commercials and music videos, and web developer building sites from scratch. Toronto.">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
-  <!-- Bump ?v= whenever styles.css or script.js change so browsers don't use a stale copy -->
-  <link rel="stylesheet" href="styles.css?v=5">
-  <!-- Intro plays once per visit (not again when coming back from the Web page); needs JS -->
+  <!-- Bump ?v= whenever styles.css or intro.js change so browsers don't use a stale copy -->
+  <link rel="stylesheet" href="styles.css?v=6">
+  <!-- Intro plays once per visit (not again when coming back from Film or Web); needs JS -->
   <script>
     try { if (!sessionStorage.getItem("introSeen")) document.documentElement.classList.add("intro-on"); }
     catch (e) { document.documentElement.classList.add("intro-on"); }
   </script>
 </head>
-<body class="film">
+<body class="home">
 
   <div class="intro" id="intro" aria-hidden="true">
     <span class="wordmark intro-mark">Shep Cowan</span>
@@ -24,24 +26,39 @@
 
   <header class="top">
     <a class="wordmark" href="./">Shep Cowan</a>
-    <p class="role"><span class="long">2nd Assistant Director</span><span class="short">2nd AD</span> &middot; Toronto</p>
+    <p class="role"><span class="long">2nd AD &amp; Web Developer</span><span class="short">Film &amp; Web</span> &middot; Toronto</p>
   </header>
 
-  <!-- Fixed index of projects; the active one is bright, the rest fade back -->
-  <nav class="index" aria-label="Projects">
-    <ol id="index-list"></ol>
-  </nav>
+  <main class="split">
+    <a class="half half-film" href="film.html">
+      <video autoplay muted loop playsinline poster="assets/film/drake-whisper-my-name.jpg" aria-hidden="true">
+        <source src="assets/film/drake-whisper-my-name.mp4" type="video/mp4">
+      </video>
+      <div class="shade"></div>
+      <div class="label">
+        <span class="num">01</span>
+        <h2>Film</h2>
+        <p>2nd AD on commercials &amp; music videos</p>
+        <span class="enter">View work &rarr;</span>
+      </div>
+    </a>
 
-  <main id="reel" class="reel"></main>
+    <a class="half half-web" href="web.html">
+      <!-- Desktop screenshots crossfade on a loop -->
+      <div class="stack" aria-hidden="true">
+        <img src="assets/web/nabulu-desktop.jpg" width="1440" height="900" alt="">
+        <img src="assets/web/mercurio-desktop.jpg" width="1440" height="900" alt="">
+        <img src="assets/web/goldstruck-desktop.jpg" width="1440" height="900" alt="">
+      </div>
+      <div class="label">
+        <span class="num">02</span>
+        <h2>Web</h2>
+        <p>Websites designed &amp; built from scratch</p>
+        <span class="enter">View work &rarr;</span>
+      </div>
+    </a>
+  </main>
 
-  <footer class="bottom">
-    <span class="counter" id="counter" aria-live="polite">1/1</span>
-    <nav class="site-nav" aria-label="Site">
-      <a href="./" aria-current="page">Film,</a>
-      <a href="web.html">Web</a>
-    </nav>
-  </footer>
-
-  <script src="script.js?v=5"></script>
+  <script src="intro.js?v=6"></script>
 </body>
 </html>

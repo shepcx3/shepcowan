@@ -218,6 +218,116 @@ body.web {
   border-bottom: 1px solid currentColor;
 }
 
+/* ---------- Landing ---------- */
+
+/* The wordmark sits on the dark film half, the role text on the light web half */
+.home .role { color: var(--ink); }
+
+.split {
+  display: flex;
+  height: 100vh;
+  height: 100svh;
+}
+
+.half {
+  position: relative;
+  flex: 1 1 0;
+  overflow: hidden;
+  transition: flex-grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* The hovered side widens a little */
+.split:hover .half:hover { flex-grow: 1.35; }
+
+.half-film { background: var(--ink); color: var(--white); }
+.half-film video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.half-film:hover video { transform: scale(1.06); }
+.half-film .shade {
+  background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.35) 100%);
+}
+
+.half-web { background: var(--paper); color: var(--ink); }
+.stack {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: min(78%, 720px);
+  aspect-ratio: 16 / 10;
+  transform: translate(-50%, -50%);
+  transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.half-web:hover .stack { transform: translate(-50%, -50%) scale(1.04); }
+.stack img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 30px 60px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  animation: stack-cycle 9s infinite;
+}
+/* Negative delay on the first so a screenshot is already showing on load */
+.stack img:nth-child(1) { animation-delay: -0.6s; }
+.stack img:nth-child(2) { animation-delay: 2.4s; }
+.stack img:nth-child(3) { animation-delay: 5.4s; }
+@keyframes stack-cycle {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }
+  33%  { opacity: 1; }
+  39%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.label {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: var(--gutter);
+}
+.label .num,
+.label p,
+.label .enter {
+  display: block;
+  font-size: var(--small);
+  font-weight: 300;
+  font-variation-settings: "wdth" 125;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.label h2 {
+  font-weight: 900;
+  font-variation-settings: "wdth" 125;
+  font-size: clamp(44px, 8vw, 140px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin: 0.15em 0 0.25em;
+}
+.label .enter {
+  margin-top: 1.4em;
+  font-weight: 500;
+}
+.label .enter::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1px;
+  margin-top: 4px;
+  background: currentColor;
+  transition: width 0.5s ease;
+}
+.half:hover .enter::after,
+.half:focus-visible .enter::after { width: 7.5em; }
+
 /* ---------- Intro ---------- */
 
 .intro { display: none; }
@@ -253,6 +363,12 @@ body.web {
   }
   .meta { flex-wrap: wrap; gap: 0.4em 1.2em; }
   .caption { flex-wrap: wrap; gap: 0.4em 1.2em; }
+  .split { flex-direction: column; }
+  .home .role { color: var(--white); }
+  .split:hover .half:hover { flex-grow: 1; }
+  .stack { top: 42%; width: 74%; }
+  .label h2 { font-size: clamp(40px, 13vw, 64px); }
+  .label .enter { margin-top: 0.8em; }
   .caption .desc { flex-basis: 100%; order: 3; }
   .shade {
     background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 60%);
@@ -261,4 +377,6 @@ body.web {
 
 @media (prefers-reduced-motion: reduce) {
   .index li { transition: none; }
+  .stack img { animation: none; }
+  .stack img:first-child { opacity: 1; }
 }
