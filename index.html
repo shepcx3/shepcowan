@@ -9,9 +9,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
   <!-- Bump ?v= whenever styles.css or script.js change so browsers don't use a stale copy -->
-  <link rel="stylesheet" href="styles.css?v=3">
-  <!-- Intro only runs with JS; without it the page shows normally -->
-  <script>document.documentElement.classList.add("js", "intro-running");</script>
+  <link rel="stylesheet" href="styles.css?v=5">
+  <!-- Intro plays once per visit (not again when coming back from the Web page); needs JS -->
+  <script>
+    try { if (!sessionStorage.getItem("introSeen")) document.documentElement.classList.add("intro-on"); }
+    catch (e) { document.documentElement.classList.add("intro-on"); }
+  </script>
 </head>
 <body class="film">
 
@@ -35,10 +38,10 @@
     <span class="counter" id="counter" aria-live="polite">1/1</span>
     <nav class="site-nav" aria-label="Site">
       <a href="./" aria-current="page">Film,</a>
-      <span class="soon" title="Coming soon">Web</span>
+      <a href="web.html">Web</a>
     </nav>
   </footer>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>

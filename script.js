@@ -88,7 +88,7 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matc
 const intro = document.getElementById("intro");
 const endIntro = () => {
   intro.remove();
-  document.documentElement.classList.remove("intro-running");
+  document.documentElement.classList.remove("intro-on");
 };
 
 function playIntro() {
@@ -131,8 +131,9 @@ function playIntro() {
   intro.addEventListener("click", () => [text, backdrop].forEach((a) => a.finish()));
 }
 
-if (reducedMotion) endIntro();
+if (reducedMotion || !document.documentElement.classList.contains("intro-on")) endIntro();
 else {
+  try { sessionStorage.setItem("introSeen", "1"); } catch (e) {}
   document.fonts.ready.then(playIntro);
   // Safety net: never leave the overlay up if something goes wrong
   setTimeout(endIntro, 4000);
