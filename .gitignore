@@ -1,0 +1,4 @@
+# Original full-length clips stay local; only compressed loops in assets/ get pushed
+raw/
+
+.DS_Store
