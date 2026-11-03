@@ -101,28 +101,27 @@ function playIntro() {
   const dx = innerWidth / 2 - (r.left + r.width / 2);
   const dy = innerHeight / 2 - (r.top + r.height / 2);
   const big = `translate(${dx}px, ${dy}px) scale(${scale})`;
-  // 2.2s total: black-on-white 0.8s, hard invert, white-on-black 0.4s, fall into place 1s.
-  // The swap is a cut, not a fade: fading both colours passes through a grey where the text vanishes.
-  const timing = { duration: 2200, fill: "forwards" };
+  // 2.4s total: blank white 0.35s, text fades in 0.25s, hold 0.6s, then a 1.2s fall
+  // into the header while the text turns white and the white backdrop dissolves.
+  const timing = { duration: 2400, fill: "forwards" };
   const settle = "cubic-bezier(0.7, 0, 0.2, 1)";
-  const cut = "steps(1, end)";
+  const fallStart = 0.5;
 
-  mark.style.opacity = 1;
   const text = mark.animate(
     [
-      { offset: 0, transform: big, color: "#000", easing: cut },
-      { offset: 0.36, transform: big, color: "#fff" },
-      { offset: 0.55, transform: big, color: "#fff", easing: settle },
-      { offset: 1, transform: "none", color: "#fff" },
+      { offset: 0, transform: big, color: "#000", opacity: 0 },
+      { offset: 0.146, transform: big, color: "#000", opacity: 0, easing: "ease-out" },
+      { offset: 0.25, transform: big, color: "#000", opacity: 1 },
+      { offset: fallStart, transform: big, color: "#000", opacity: 1, easing: settle },
+      { offset: 1, transform: "none", color: "#fff", opacity: 1 },
     ],
     timing
   );
   const backdrop = intro.animate(
     [
-      { offset: 0, backgroundColor: "#fff", easing: cut },
-      { offset: 0.36, backgroundColor: "#0b0b0b" },
-      { offset: 0.55, backgroundColor: "#0b0b0b", easing: "ease-out" },
-      { offset: 1, backgroundColor: "rgba(11, 11, 11, 0)" },
+      { offset: 0, backgroundColor: "#fff" },
+      { offset: fallStart, backgroundColor: "#fff", easing: settle },
+      { offset: 1, backgroundColor: "rgba(255, 255, 255, 0)" },
     ],
     timing
   );
