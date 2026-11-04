@@ -8,6 +8,7 @@ const projects = [
     type: "Music Video",
     year: 2026,
     role: "2nd AD",
+    production: "Denim",
     slug: "drake-whisper-my-name",
     url: "https://www.youtube.com/watch?v=YhUqxWR4mnE",
   },
@@ -18,8 +19,20 @@ const projects = [
     type: "Commercial",
     year: 2026,
     role: "2nd AD",
+    production: "Denim",
     slug: "nissan-kicks-rock-creek",
     url: "https://www.youtube.com/watch?v=5nyNFdJ_pdE",
+  },
+  {
+    client: "Capella University",
+    title: "How Dare You",
+    director: "Elle Brooks-Tao",
+    type: "Commercial",
+    year: 2026,
+    role: "2nd AD",
+    production: "Sanctuary, serviced by Suneeva",
+    slug: "capella-how-dare-you",
+    url: "https://www.youtube.com/watch?v=3kinNxekkVY",
   },
 ];
 
@@ -40,9 +53,10 @@ projects.forEach((p, i) => {
     </video>
     <div class="shade"></div>
     <div class="meta">
-      <span>${p.type} &middot; ${p.year}</span>
+      <span>${p.type}${p.year ? ` &middot; ${p.year}` : ""}</span>
       <span>${p.role}</span>
-      <a href="${p.url}" target="_blank" rel="noopener">Watch full &nearr;</a>
+      <span>Prod. ${p.production}</span>
+      ${p.url ? `<a href="${p.url}" target="_blank" rel="noopener">Watch full &nearr;</a>` : ""}
     </div>`;
   reel.appendChild(slide);
 
