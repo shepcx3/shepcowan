@@ -1,6 +1,4 @@
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// Landing intro: the wordmark fills a white screen in black, then falls into its
+// Intro: the wordmark fills a white screen in black, then falls into its
 // spot in the header, turning white as the white backdrop dissolves.
 const intro = document.getElementById("intro");
 const endIntro = () => {
@@ -48,7 +46,7 @@ function playIntro() {
   intro.addEventListener("click", () => [text, backdrop].forEach((a) => a.finish()));
 }
 
-if (reducedMotion || !document.documentElement.classList.contains("intro-on")) endIntro();
+if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !document.documentElement.classList.contains("intro-on")) endIntro();
 else {
   try { sessionStorage.setItem("introSeen", "1"); } catch (e) {}
   document.fonts.ready.then(playIntro);
