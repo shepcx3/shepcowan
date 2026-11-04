@@ -69,6 +69,26 @@ projects.forEach((p, i) => {
   list.appendChild(li);
 });
 
+// Contact is the last stop in the reel, after every project
+const contact = document.createElement("section");
+contact.className = "contact";
+contact.id = "contact";
+contact.innerHTML = `
+  <p>Contact</p>
+  <a href="mailto:info@shepcowan.ca">info@shepcowan.ca</a>`;
+reel.appendChild(contact);
+
+document.getElementById("contact-link").addEventListener("click", (e) => {
+  e.preventDefault();
+  contact.scrollIntoView({ behavior: "smooth" });
+});
+
+// The project index and counter fade out on the contact slide
+new IntersectionObserver(
+  ([entry]) => document.body.classList.toggle("on-contact", entry.isIntersecting),
+  { threshold: 0.6 }
+).observe(contact);
+
 const slides = [...reel.querySelectorAll(".slide")];
 const items = [...list.children];
 
