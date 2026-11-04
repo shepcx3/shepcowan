@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Browsers may only load this site's own files, plus Google Fonts -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; media-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Shep Cowan — Film</title>
   <meta name="description" content="Shep Cowan — Second Assistant Director on commercials and music videos in Toronto.">
   <link rel="icon" href="favicon.png" type="image/png">
@@ -11,12 +14,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
   <!-- Bump ?v= whenever styles.css or the scripts change so browsers don't use a stale copy -->
-  <link rel="stylesheet" href="styles.css?v=10">
-  <!-- Intro plays once per visit; needs JS -->
-  <script>
-    try { if (!sessionStorage.getItem("introSeen")) document.documentElement.classList.add("intro-on"); }
-    catch (e) { document.documentElement.classList.add("intro-on"); }
-  </script>
+  <link rel="stylesheet" href="styles.css?v=11">
+  <script src="intro-flag.js?v=11"></script>
 </head>
 <body class="film">
 
@@ -41,7 +40,7 @@
     <a id="contact-link" href="#contact">Contact</a>
   </footer>
 
-  <script src="film.js?v=10"></script>
-  <script src="intro.js?v=10"></script>
+  <script src="film.js?v=11"></script>
+  <script src="intro.js?v=11"></script>
 </body>
 </html>
